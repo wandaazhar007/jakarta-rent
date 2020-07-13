@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="icon" type="image/png" href="<?php echo base_url() ?>/assets/img/logo-tangsel.png">
-  <title>Admin Layanan Pengaduan</title>
+  <link rel="icon" type="image/png" href="<?php echo base_url() ?>/assets/img/logo-jakarta-rent.png">
+  <title><?php echo $title ?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -32,13 +32,15 @@
   </div>
   <div class="register-box">
     <div class="one-da-login-logo">
-      <a href="<?php echo base_url() ?>"><img src="<?php echo base_url() ?>/assets/img/logo-rsu.png" alt=""></a>
+      <div style="background-color: #13a9e2; width: 360px;" class="text-center mb-0">
+        <a href="<?php echo base_url() ?>"><img src="<?php echo base_url() ?>/assets/img/logo-jakarta-rent.png" alt="" style="width: 30%;" class="mb-0"></a>
+      </div>
     </div>
 
     <div class="card">
       <div class="card-body register-card-body">
         <?php echo $this->session->flashdata('message'); ?>
-        <p class="login-box-msg">Form Register User</p>
+        <p class="login-box-msg text-uppercase" style="color: #13a9e2; font-weight: bold;"><?php echo $title ?></p>
         <form action="<?php echo base_url('auth/registerUser') ?>" method="post">
           <div class="input-group mb-3 input-group-sm">
             <input type="text" name="nama" value="<?php echo set_value('nama') ?>" class="form-control" placeholder="Nama Lengkap">

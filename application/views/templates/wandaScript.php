@@ -51,47 +51,6 @@
 <!-- Wanda javascript -->
 <script src="<?php echo base_url() ?>/assets/one-da-js/wandaJavascript.js"></script>
 
-<script>
-
-</script>
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#data').on('click', '.view_data', function() {
-      var idPesan = $(this).attr('id');
-      $.ajax({
-        url: "<?php echo base_url() ?>inbox/getFormForward",
-        method: "POST",
-        data: {
-          idPesan: idPesan
-        },
-        success: function(data) {
-          console.log('yes');
-          $('#result').html(data);
-          $('#modal_forward').modal('show');
-        }
-      }); //end ajax
-    });
-  });
-</script>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#data').on('click', '.view_history_pesan', function() {
-      var idPesan = $(this).attr('id');
-      $.ajax({
-        url: "<?php echo base_url() ?>inbox/getHistoryForward",
-        method: "POST",
-        data: {
-          idPesan: idPesan
-        },
-        success: function(data) {
-          $('#result_history_forward').html(data);
-          $('#modal_history_forward').modal('show');
-        }
-      }); //end ajax
-    });
-  });
-</script>
 
 <script>
   $(function() {
@@ -106,66 +65,6 @@
   })
 </script>
 
-<!-- inbox message -->
-<script>
-  $(function() {
-    //Enable check and uncheck all functionality
-    $('.checkbox-toggle').click(function() {
-      var clicks = $(this).data('clicks')
-      if (clicks) {
-        //Uncheck all checkboxes
-        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
-        $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
-      } else {
-        //Check all checkboxes
-        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
-        $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
-      }
-      $(this).data('clicks', !clicks)
-    })
-
-    //Handle starring for glyphicon and font awesome
-    $('.mailbox-star').click(function(e) {
-      e.preventDefault()
-      //detect type
-      var $this = $(this).find('a > i')
-      var glyph = $this.hasClass('glyphicon')
-      var fa = $this.hasClass('fa')
-
-      //Switch states
-      if (glyph) {
-        $this.toggleClass('glyphicon-star')
-        $this.toggleClass('glyphicon-star-empty')
-      }
-
-      if (fa) {
-        $this.toggleClass('fa-star')
-        $this.toggleClass('fa-star-o')
-      }
-    })
-  })
-</script>
-
-<!-- Show Modal Detail User -->
-<script type="text/javascript">
-  $(document).ready(function() {
-    // $('#tabel_list_pelapor').DataTable();
-    $('#tabel_list_pelapor').on('click', '.view_data', function() {
-      var pelaporData = $(this).attr('id');
-      $.ajax({
-        url: "<?php echo base_url() ?>pelapor/detail/getDetailPelaporResult",
-        method: "POST",
-        data: {
-          pelaporData: pelaporData
-        },
-        success: function(data) {
-          $('#pelapor_result').html(data);
-          $('#modal_add_user').modal('show');
-        }
-      }); //end ajax
-    });
-  });
-</script>
 <script>
   $(function() {
     $(document).on('click', '[data-toggle="lightbox"]', function(event) {
@@ -185,50 +84,6 @@
   })
 </script>
 
-<!-- page script -->
-<script>
-  $(function() {
-    $("#jsGrid1").jsGrid({
-      height: "100%",
-      width: "100%",
-
-      sorting: true,
-      paging: true,
-
-      data: db.clients,
-
-      fields: [{
-          name: "Name",
-          type: "text",
-          width: 150
-        },
-        {
-          name: "Age",
-          type: "number",
-          width: 50
-        },
-        {
-          name: "Address",
-          type: "text",
-          width: 200
-        },
-        {
-          name: "Country",
-          type: "select",
-          items: db.countries,
-          valueField: "Id",
-          textField: "Name"
-        },
-        {
-          name: "Married",
-          type: "checkbox",
-          title: "Is Married"
-        }
-      ]
-    });
-  });
-</script>
-<!-- page script -->
 <script>
   $(function() {
     $("#example1").DataTable();

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="icon" type="image/png" href="<?php echo base_url() ?>/assets/img/logo-tangsel.png">
+  <link rel="icon" type="image/png" href="<?php echo base_url() ?>/assets/img/logo-jakarta-rent.png">
   <title><?php echo $title ?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +36,7 @@
     <div class="card">
       <div class="card-body login-card-body">
         <?php echo $this->session->flashdata('message'); ?>
-        <p class="login-box-msg" style="color: #13a9e2; font-weight: bold;">ADMIN JAKARTA RENT</p>
+        <p class="login-box-msg text-uppercase" style="color: #13a9e2; font-weight: bold;"><?php echo $title ?></p>
         <form action="<?php echo base_url('auth/login') ?>" method="post" id="">
           <div class="input-group mb-3">
             <input type="text" class="form-control" id="first" name="email" value="<?php echo set_value('email') ?>" placeholder="Masukan username" autocomplete="off">

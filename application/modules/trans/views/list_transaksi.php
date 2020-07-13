@@ -10,7 +10,7 @@
   <div class="row">
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">DataTable with default features</h3>
+        <span class="text-muted one-da-text-tosca"><?php echo $title ?></span>
       </div>
       <div class="card-body table-responsive p-3">
         <table id="example1" class="table table-hover">
@@ -31,7 +31,6 @@
             $no = 1;
             foreach ($getAllTransaksi as $i) :
             ?>
-              <input type="hidden" name="order_id" value="<?php echo $i['order_id'] ?>">
               <tr>
                 <td><small><?php echo $no++ ?></small></td>
                 <td><small><?php echo $i['nama_user'] ?></small></td>
@@ -71,22 +70,17 @@
                   if ($i['status'] == 0) {
                     echo '
                     <button class="btn btn-success btn-xs view_data" id="' . $i['order_id'] . '"><i class="fa fa-search"></i> Rincian</button>
-                    <a href="' . base_url('trans/cancelTrans/') . $i['order_id'] . '">
-                    <button class="btn btn-danger btn-xs" id="btnCancel" class="btn-swal" data-cancel="' . $i['order_id'] . '"><i class="fa fa-window-close"></i> Cancel</button>
-                    </a>';
+                    <button class="btn btn-danger btn-xs confirm_delete" id="' . $i['order_id'] . '"><i class="fa fa-window-close"></i> Cancel</button>
+                    ';
                   } elseif ($i['status'] == 1) {
                     echo '
                     <button class="btn btn-success btn-xs view_data" id="' . $i['order_id'] . '"><i class="fa fa-search"></i> Rincian</button>
-                    <a href="' . base_url('trans/cancelTrans/') . $i['order_id'] . '">
-                    <button class="btn btn-danger btn-xs" id="btnCancel" class="btn-swal" data-cancel="' . $i['order_id'] . '"><i class="fa fa-window-close"></i> Cancel</button>
-                    </a>
+                    <button class="btn btn-danger btn-xs confirm_delete" id="' . $i['order_id'] . '"><i class="fa fa-window-close"></i> Cancel</button>
                     ';
                   } else {
                     echo '
                     <button class="btn btn-success btn-xs view_data" id="' . $i['order_id'] . '"><i class="fa fa-search"></i> Rincian</button>
-                    <a href="' . base_url('trans/cancelTrans/') . $i['order_id'] . '">
-                    <button class="btn btn-danger btn-xs" id="btnCancel" class="btn-swal" data-cancel="' . $i['order_id'] . '"><i class="fa fa-window-close"></i> Cancel</button>
-                    </a>
+                    <button class="btn btn-danger btn-xs confirm_delete" id="' . $i['order_id'] . '"><i class="fa fa-window-close"></i> Cancel</button>
                     ';
                   }
                   ?>
@@ -112,6 +106,24 @@
       <div class="modal-body">
         <div class="card-body">
           <div id="result_history_transaksi"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal History transaksi -->
+<div class="modal fade" id="modal_confirm_delete">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h4 class="modal-title"> <i class="fa fa-envelope"></i> Cancel Transaksi</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <div id="result_confirm_delete" class="justify-content-center"></div>
         </div>
       </div>
     </div>

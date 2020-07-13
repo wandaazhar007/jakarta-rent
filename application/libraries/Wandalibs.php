@@ -18,9 +18,7 @@ class Wandalibs
     function _checkLoginSession()
     {
         $CI = &get_instance();
-        if (!empty($CI->session->userdata('email'))) {
-            // redirect('dashboard');
-        } else {
+        if (empty($CI->session->userdata('email'))) {
             redirect('auth/login');
         }
     }
@@ -64,6 +62,10 @@ class Wandalibs
     {
         $CI = &get_instance();
         if ($CI->session->userdata('nama')) {
+            $CI->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <i class="icon fas fa-close"></i><small><b>Yeay!</b>. Anda sedang login login dengan email ' . $CI->session->userdata('email') . '</small>
+            </div>');
             redirect('dashboard');
         }
     }
@@ -280,47 +282,10 @@ class Wandalibs
         }
     }
 
-    function getAllPesanPenunjang()
+    function _rupiah($angka)
     {
-        $CI = &get_instance();
-        $query = $CI->db->query("SELECT `pesan`.`id` FROM `pesan` WHERE `pesan`.`bidang` = 'penunjang'");
-        if ($query->num_rows() > 0) {
-            return $query->num_rows();
-        } else {
-            return 0;
-        }
-    }
-
-    function getAllPesanKeperawatan()
-    {
-        $CI = &get_instance();
-        $query = $CI->db->query("SELECT `pesan`.`id` FROM `pesan` WHERE `pesan`.`bidang` = 'keperawatan'");
-        if ($query->num_rows() > 0) {
-            return $query->num_rows();
-        } else {
-            return 0;
-        }
-    }
-
-    function getAllPesanYanmed()
-    {
-        $CI = &get_instance();
-        $query = $CI->db->query("SELECT `pesan`.`id` FROM `pesan` WHERE `pesan`.`bidang` = 'yanmed'");
-        if ($query->num_rows() > 0) {
-            return $query->num_rows();
-        } else {
-            return 0;
-        }
-    }
-    function getAllPesanUmum()
-    {
-        $CI = &get_instance();
-        $query = $CI->db->query("SELECT `pesan`.`id` FROM `pesan` WHERE `pesan`.`bidang` = 'umum'");
-        if ($query->num_rows() > 0) {
-            return $query->num_rows();
-        } else {
-            return 0;
-        }
+        $resultRupiah = "Rp. " . number_format($angka, 0, ',', '.');
+        return $resultRupiah;
     }
 
     function selisihWaktuBalasByDay($tgl_masuk, $tgl_balas)

@@ -31,15 +31,14 @@ $('#btnCancel').on('click', function (e) {
 })
 
 //~ Modal History Transaksi ~//
-
 $(document).ready(function () {
 	$('#example1').on('click', '.view_data', function () {
-		var transaksiData = $(this).attr('id');
+		var order_id = $(this).attr('id');
 		$.ajax({
 			url: base_url + "trans/getHistoryTrans/",
 			method: "POST",
 			data: {
-				transaksiData: transaksiData
+				order_id: order_id
 			},
 			success: function (data) {
 				$('#result_history_transaksi').html(data);
@@ -48,6 +47,88 @@ $(document).ready(function () {
 		});
 	});
 });
+
+//~ Modal Confirm Hapus Transaksi ~//
+$(document).ready(function () {
+	$('#example1').on('click', '.confirm_delete', function () {
+		var order_id = $(this).attr('id');
+		$.ajax({
+			url: base_url + "trans/showConfirmDelete/",
+			method: "POST",
+			data: {
+				order_id: order_id
+			},
+			success: function (data) {
+				$('#result_confirm_delete').html(data);
+				$('#modal_confirm_delete').modal('show');
+			}
+		});
+	});
+});
+
+//~ Modal Confirm Hapus Mobil ~//
+$(document).ready(function () {
+	$('#example1').on('click', '.confirm_delete_mobil', function () {
+		var mobil_id = $(this).attr('id');
+		$.ajax({
+			url: base_url + "mobil/showConfirmDelete/",
+			method: "POST",
+			data: {
+				mobil_id: mobil_id
+			},
+			success: function (data) {
+				$('#result_confirm_delete_mobil').html(data);
+				$('#modal_confirm_delete_mobil').modal('show');
+			}
+		});
+	});
+});
+
+//~ Modal Data Mobil ~//
+$(document).ready(function () {
+	$('#example1').on('click', '.view_mobil', function () {
+		var mobil_id = $(this).attr('id');
+		$.ajax({
+			url: base_url + "mobil/getDataById/",
+			method: "POST",
+			data: {
+				mobil_id: mobil_id
+			},
+			success: function (data) {
+				$('#result_detail_mobil').html(data);
+				$('#modal_detail_mobil').modal('show');
+			}
+		});
+	});
+});
+
+
+//~ Format Rupiah pada tag input harga produk di form input data produk ~//
+var rupiah = document.getElementById('price');
+rupiah.addEventListener('keyup', function (e) {
+	// tambahkan 'Rp.' pada saat form di ketik
+	// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+	rupiah.value = formatRupiah(this.value, 'Rp. ');
+});
+
+/* Fungsi formatRupiah */
+function formatRupiah(angka, prefix) {
+	var number_string = angka.replace(/[^,\d]/g, '').toString(),
+		split = number_string.split(','),
+		sisa = split[0].length % 3,
+		rupiah = split[0].substr(0, sisa),
+		ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+	// tambahkan titik jika yang di input sudah menjadi angka ribuan
+	if (ribuan) {
+		separator = sisa ? '.' : '';
+		rupiah += separator + ribuan.join('.');
+	}
+
+	rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+	return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+}
+
 
 //~ Datatable serverside pelapor ~//
 var save_method; //for save method string

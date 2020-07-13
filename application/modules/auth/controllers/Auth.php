@@ -6,10 +6,7 @@ class Auth extends MX_Controller
   {
     parent::__construct();
     $this->load->library('form_validation');
-    // $this->wandalibs->redirectLoginExist();
-    if ($this->session->userdata('nama')) {
-      redirect('dashboard');
-    }
+    $this->wandalibs->redirectLoginExist();
   }
 
   function login()
@@ -24,7 +21,7 @@ class Auth extends MX_Controller
     ]);
 
     if ($this->form_validation->run() == false) {
-      $data['title']      = 'Login Layanan Pengaduan';
+      $data['title']      = 'Jakarta Rent | Login';
       $data['contents']   = 'login';
 
       $this->load->view('login', $data);
@@ -32,11 +29,6 @@ class Auth extends MX_Controller
 
       $this->wandalibs->_loginProcess();
     }
-  }
-
-  function logout()
-  {
-    $this->wandalibs->_doLogout();
   }
 
   function pageVerifikasiAkun()
@@ -76,7 +68,7 @@ class Auth extends MX_Controller
     ]);
 
     if ($this->form_validation->run() == false) {
-      $data['title']      = 'Login Layanan Pengaduan';
+      $data['title']      = 'Jakarta Rent | Login';
       redirect('' . $_SERVER['HTTP_REFERER'] . '');
       $this->load->view('v_verifikasi', $data);
     } else {
@@ -118,7 +110,7 @@ class Auth extends MX_Controller
 
     if ($this->form_validation->run() == false) {
 
-      $data['title']      = 'Form Register User';
+      $data['title']      = 'Jakarta Rent | Register';
       $data['breadcumb']  = 'Form Register User';
       $data['contents']   = 'form_register';
 
@@ -167,7 +159,7 @@ class Auth extends MX_Controller
 
     if ($this->form_validation->run() == false) {
 
-      $data['title']      = 'Form Lupa Password';
+      $data['title']      = 'Jakarta Rent | Forgot Password';
       $data['breadcumb']  = 'Form Lupa Password';
 
       $this->load->view('forgot_password', $data);

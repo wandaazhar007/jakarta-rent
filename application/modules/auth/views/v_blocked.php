@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="icon" type="image/png" href="<?php echo base_url() ?>/assets/img/logo-tangsel.png">
-  <title>Ups!</title>
+  <link rel="icon" type="image/png" href="<?php echo base_url() ?>/assets/img/logo-jakarta-rent.png">
+  <title>Ups! | Jakarta Rent | Login</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -46,13 +46,15 @@
           <input type="text" name="search" class="form-control" placeholder="Search">
 
           <div class="input-group-append">
-            <button type="submit" name="submit" class="btn btn-danger"><i class="fas fa-search"></i>
-            </button>
+            <button type="submit" name="submit" class="btn btn-danger"><i class="fas fa-search"></i></button>
           </div>
         </div>
         <!-- /.input-group -->
       </form>
     </div>
+    <a href="<?php echo base_url('auth/login') ?>">
+      <button class="btn btn-danger btn-sm">Go Back!</button>
+    </a>
   </div>
   <!-- /.center -->
 

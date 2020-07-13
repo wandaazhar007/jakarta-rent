@@ -11,13 +11,9 @@ class Dashboard extends MX_Controller
 
   function index()
   {
-    $data['title']                    = 'Dashboard';
-    $data['breadcumb']                = 'Dashboard';
-    // $data['getAllPesanPenunjang']     = $this->wandalibs->getAllPesanPenunjang();
-    // $data['getAllPesanKeperawatan']     = $this->wandalibs->getAllPesanKeperawatan();
-    // $data['getAllPesanYanmed']     = $this->wandalibs->getAllPesanYanmed();
-    // $data['getAllPesanUmum']     = $this->wandalibs->getAllPesanUmum();
-    $data['contents']   = 'v_dashboard';
+    $data['title']          = 'Jakarta Rent | Dashboard';
+    $data['breadcumb']      = 'Dashboard';
+    $data['contents']       = 'v_dashboard';
     $this->load->view('templates/core', $data);
   }
 
