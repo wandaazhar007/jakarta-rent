@@ -30,14 +30,13 @@ $('#btnCancel').on('click', function (e) {
 	})
 })
 
-//~ Modal Hostory Transaksi ~//
+//~ Modal History Transaksi ~//
 
 $(document).ready(function () {
-	// $('#tabel_produk').DataTable();
 	$('#example1').on('click', '.view_data', function () {
 		var transaksiData = $(this).attr('id');
 		$.ajax({
-			url: base_url + "trans/getDetail/",
+			url: base_url + "trans/getHistoryTrans/",
 			method: "POST",
 			data: {
 				transaksiData: transaksiData

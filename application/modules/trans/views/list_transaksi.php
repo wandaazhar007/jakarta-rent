@@ -31,6 +31,7 @@
             $no = 1;
             foreach ($getAllTransaksi as $i) :
             ?>
+              <input type="hidden" name="order_id" value="<?php echo $i['order_id'] ?>">
               <tr>
                 <td><small><?php echo $no++ ?></small></td>
                 <td><small><?php echo $i['nama_user'] ?></small></td>
