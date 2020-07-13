@@ -34,13 +34,13 @@
 
         <li class="nav-header">Master Data</li>
         <li class="nav-item">
-          <a href="<?php echo base_url('pelapor') ?>" class="nav-link">
+          <a href="<?php echo base_url('peminjaman') ?>" class="nav-link">
             <i class="nav-icon far fa-calendar"></i>
             <p>Peminjaman</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?php echo base_url('user') ?>" class="nav-link">
+          <a href="<?php echo base_url('pengembalian') ?>" class="nav-link">
             <i class="nav-icon far fa-calendar"></i>
             <p>Pengembalian</p>
           </a>

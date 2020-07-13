@@ -6,7 +6,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 col-sm-6 col-md-3">
-      <a href="<?php echo base_url('inbox/getAllInboxPenunjang') ?>" class="wan-text-title-dashboard">
+      <a href="<?php echo base_url() ?>" class="wan-text-title-dashboard">
         <div class="info-box">
           <span class="info-box-icon bg-success"><i class="far fa-envelope"></i></span>
           <div class="info-box-content">
@@ -20,7 +20,7 @@
     </div>
     <!-- /.col -->
     <div class="col-12 col-sm-6 col-md-3">
-      <a href="<?php echo base_url('inbox/getAllInboxYanmed') ?>" class="wan-text-title-dashboard">
+      <a href="<?php echo base_url() ?>" class="wan-text-title-dashboard">
         <div class="info-box">
           <span class="info-box-icon bg-primary"><i class="far fa-envelope"></i></span>
           <div class="info-box-content">
@@ -38,7 +38,7 @@
     <div class="clearfix hidden-md-up"></div>
 
     <div class="col-12 col-sm-6 col-md-3">
-      <a href="<?php echo base_url('inbox/getAllInboxKeperawatan') ?>" class="wan-text-title-dashboard">
+      <a href="<?php echo base_url() ?>" class="wan-text-title-dashboard">
         <div class="info-box">
           <span class="info-box-icon bg-danger"><i class="far fa-envelope"></i></span>
           <div class="info-box-content">
@@ -52,7 +52,7 @@
     </div>
     <!-- /.col -->
     <div class="col-12 col-sm-6 col-md-3">
-      <a href="<?php echo base_url('inbox/getAllInboxUmum') ?>" class="wan-text-title-dashboard">
+      <a href="<?php echo base_url() ?>" class="wan-text-title-dashboard">
         <div class="info-box">
           <span class="info-box-icon bg-warning"><i class="far fa-envelope"></i></span>
           <div class="info-box-content">
