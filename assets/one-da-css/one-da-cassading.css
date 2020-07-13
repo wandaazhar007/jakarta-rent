@@ -1,0 +1,175 @@
+.bg-tosca {
+	color: #fff;
+	background-color: #13a9e2;
+}
+
+.text-tosca {
+	color: #13a9e2;
+}
+
+.text-tosca:hover {
+	text-decoration: none;
+	color: #13a9e2;
+}
+
+.one-da-login-logo img {
+	width: 130px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+}
+
+.one-da-btn-login {
+	display: block;
+	margin-left: auto;
+	margin-right: 0;
+}
+
+.btn-tosca {
+	color: #ffffff;
+	background-color: #13a9e2;
+}
+
+.btn-tosca:hover {
+	color: #13a9e2;
+	background-color: #E9ECEF;
+	padding: 10px;
+	transition: 1s;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.one-da-text-unlink {
+	text-decoration: none;
+	color: #000;
+}
+
+.one-da-text-unlink:hover {
+	text-decoration: none;
+	color: #000;
+}
+
+.one-da-text-tosca {
+	color: #13a9e2;
+}
+
+.one-da-text-tosca:hover {
+	color: #13a9e2;
+}
+
+.wan-text-title-dashboard {
+	color: #343A40;
+}
+
+.wan-text-title-dashboard:hover {
+	color: #343A40;
+}
+
+/* button add user*/
+.fab-add-user {
+	position: fixed;
+	top: 70px;
+	left: 270px;
+	z-index: 999;
+	cursor: pointer;
+}
+
+.fab-icon-holder {
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+	background: #009999;
+	box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
+	margin-bottom: 5px;
+}
+
+.fab-icon-holder2 {
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+	background: #009999;
+	box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
+	margin-bottom: 5px;
+	margin-right: 5px;
+}
+
+.fab-icon:hover {
+	opacity: 0.8;
+}
+
+.fab-icon-holder i {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	font-size: 35px;
+	color: #ffffff;
+}
+
+.fab-icon-holder2 i {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	font-size: 25px;
+	color: #ffffff;
+}
+
+.fab-icon-holder2 a {
+	display: contents;
+}
+
+.fab2 {
+	width: 60px;
+	height: 60px;
+	background: #009999;
+}
+
+.fab-options {
+	list-style-type: none;
+	margin: 0;
+	position: absolute;
+	bottom: 70px;
+	right: 0;
+	opacity: 0;
+	transition: all 0.3s ease;
+	transform: scale(0);
+	transform-origin: 85% bottom;
+}
+
+.fab2:hover+.fab-options,
+.fab-options:hover {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.fab-option li {
+	display: flex;
+	justify-content: flex-end;
+	padding: 5px;
+}
+
+.fab-label {
+	padding: 2px 5px;
+	align-self: center;
+	user-select: none;
+	white-space: nowrap;
+	border-radius: 3px;
+	font-size: 16px;
+	background: #666666;
+	color: #ffffff;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+	margin-right: 10px;
+}
+
+/* Modal Detail Foto User */
+.img-detail-profile {
+	width: 265px;
+}
+
+@media (min-width: 922px) {
+	.img-detail-profile {
+		width: 465px;
+	}
+}
