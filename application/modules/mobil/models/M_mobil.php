@@ -15,4 +15,9 @@ class M_mobil extends CI_Model
   {
     return $this->db->query("SELECT `tb_mobil`.`foto` FROM `tb_mobil` WHERE `tb_mobil`.`mobil_id` = '$mobil_id'")->result_array();
   }
+
+  function getAlamat()
+  {
+    return $this->db->query("SELECT * FROM `tb_alamat`")->result_array();
+  }
 }

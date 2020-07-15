@@ -11,6 +11,11 @@
     <div class="card">
       <div class="card-header">
         <span class="text-muted one-da-text-tosca"><?php echo $title ?></span>
+        <div class="float-right">
+          <a href="<?php echo base_url('mobil/insertMobil') ?>">
+            <button class="btn btn-tosca btn-sm"><i class="fa fa-plus"></i> Tambah Mobil</button>
+          </a>
+        </div>
       </div>
       <div class="card-body table-responsive p-3">
         <table id="example1" class="table table-hover">
@@ -18,7 +23,7 @@
             <tr>
               <th>No</th>
               <th>Nama Mobil</th>
-              <th>Tipe Mobil</th>
+              <th>Jenis Mobil</th>
               <th>Transmisi</th>
               <th>Tahun</th>
               <th>Harga</th>
@@ -34,7 +39,13 @@
               <tr>
                 <td><small><?php echo $no++ ?></small></td>
                 <td><small><?php echo $i['nama'] ?></small></td>
-                <td><small><?php echo $i['tipe'] ?></small></td>
+                <td><small><?php
+                            if ($i['jenis'] == 1) {
+                              echo 'Minifan';
+                            } else {
+                              echo 'sedan';
+                            }
+                            ?></small></td>
                 <td><small><?php echo $i['transmisi'] ?></small></td>
                 <td><small><?php echo $i['tahun'] ?></small></td>
                 <td><small><?php echo $this->wandalibs->_rupiah($i['harga']) ?></small></td>

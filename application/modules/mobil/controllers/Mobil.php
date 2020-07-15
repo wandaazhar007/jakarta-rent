@@ -1,4 +1,8 @@
-<?php defined('BASEPATH') or exit('no direct script access allowed');
+<?php
+
+use FontLib\Table\Type\post;
+
+defined('BASEPATH') or exit('no direct script access allowed');
 
 class Mobil extends MX_Controller
 {
@@ -8,6 +12,7 @@ class Mobil extends MX_Controller
     $this->wandalibs->_checkLoginSession();
     $this->load->library('wandalibs');
     $this->load->model('m_mobil', '_model');
+    $this->load->library('form_validation');
   }
 
   function index()
@@ -56,6 +61,9 @@ class Mobil extends MX_Controller
       </table>
         <div class="text-center pt-3">
       <img src="' . base_url() . 'assets/img/mobil/' . $i['foto'] . '" style="width: 200px;" class="img-thumbnail">
+      <a href="' . base_url('mobil/updateMobil/') . $i['mobil_id'] . '">
+        <button class="btn btn-tosca btn-sm"><i class="fa fa-edit"></i>Edit</button>
+      </a>
         </div>  
       ';
       }
@@ -103,5 +111,161 @@ class Mobil extends MX_Controller
     $data['getFotoMobil'] = $this->_model->getFotoMobil($mobil_id);
 
     $this->load->view('detail_foto_mobil', $data);
+  }
+
+  function insertMobil()
+  {
+    $this->form_validation->set_rules('nama', 'Nama Mobil', 'required', [
+      'required'      => '*Nama mobil harus diisi!'
+    ]);
+    $this->form_validation->set_rules('transmisi', 'Transmisi', 'required', [
+      'required'      => '*Transmisi harus diisi'
+    ]);
+    $this->form_validation->set_rules('jenis', 'Jenis Mobil', 'required', [
+      'required'      => '*Jenis mobil wajib diisi!'
+    ]);
+    $this->form_validation->set_rules('kursi', 'kursi', 'required', [
+      'required'       => '*Jumlah kursi wajib diisi'
+    ]);
+    $this->form_validation->set_rules('pintu', 'Pintu', 'required', [
+      'required'       => '*Jumlah kursi wajib diisi'
+    ]);
+    $this->form_validation->set_rules('air_bag', 'Jumlah Pintu', 'required', [
+      'required'       => '*Jumlah kursi wajib diisi'
+    ]);
+    $this->form_validation->set_rules('alamat_id', 'Alamat', 'required', [
+      'required'      => '*Alamat harus diisi!'
+    ]);
+
+    if ($this->form_validation->run() == false) {
+      $data['title']      = 'Jakarta Rent | Form Tambah Mobil';
+      $data['contents']   = 'form_input';
+      $data['getAlamat']  = $this->_model->getAlamat();
+
+      $this->load->view('templates/core', $data);
+    } else {
+      $nama         = htmlspecialchars($this->input->post('nama', true));
+      $transmisi    = htmlspecialchars($this->input->post('transmisi', true));
+      $jenis        = htmlspecialchars($this->input->post('jenis', true));
+      $kursi        = htmlspecialchars($this->input->post('kursi', true));
+      $pintu        = htmlspecialchars($this->input->post('pintu', true));
+      $harga        = htmlspecialchars($this->input->post('harga', true));
+      $tahun        = htmlspecialchars($this->input->post('tahun', true));
+      $alamat_id    = htmlspecialchars($this->input->post('alamat_id', true));
+
+      $uploadGambar   = $_FILES['foto']['name'];
+      if ($uploadGambar) {
+        $config['upload_path']      = './assets/img/mobil';
+        $config['allowed_types']    = 'gif|jpg|png|pdf';
+        $config['max_size']         = '2048';
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('foto')) {
+          $this->upload->data('file_name');
+        } else {
+          echo $this->upload->display_errors();
+        }
+      } else {
+        $uploadGambar = 'default-avatar.png';
+      }
+
+      $data = [
+        'nama'          => $nama,
+        'transmisi'     => $transmisi,
+        'jenis'         => $jenis,
+        'kursi'         => $kursi,
+        'pintu'         => $pintu,
+        'harga'         => $harga,
+        'tahun'         => $tahun,
+        'foto'          => $uploadGambar,
+        'alamat_id'     => $alamat_id
+      ];
+
+      $this->db->insert('tb_mobil', $data);
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <i class="icon fa fa-check"></i><b>Yeay!.</b>data mobil berhasil disimpan
+    </div>');
+      redirect('mobil');
+    }
+  }
+
+
+  function updateMobil($mobil_id)
+  {
+    $this->form_validation->set_rules('nama', 'Nama Mobil', 'required', [
+      'required'      => '*Nama mobil harus diisi!'
+    ]);
+    $this->form_validation->set_rules('transmisi', 'Transmisi', 'required', [
+      'required'      => '*Transmisi harus diisi'
+    ]);
+    $this->form_validation->set_rules('jenis', 'Jenis Mobil', 'required', [
+      'required'      => '*Jenis mobil wajib diisi!'
+    ]);
+    $this->form_validation->set_rules('kursi', 'kursi', 'required', [
+      'required'       => '*Jumlah kursi wajib diisi'
+    ]);
+    $this->form_validation->set_rules('pintu', 'Pintu', 'required', [
+      'required'       => '*Jumlah kursi wajib diisi'
+    ]);
+    $this->form_validation->set_rules('air_bag', 'Jumlah Pintu', 'required', [
+      'required'       => '*Jumlah kursi wajib diisi'
+    ]);
+    $this->form_validation->set_rules('alamat_id', 'Alamat', 'required', [
+      'required'      => '*Alamat harus diisi!'
+    ]);
+
+    if ($this->form_validation->run() == false) {
+      $data['title']      = 'Jakarta Rent | Form Tambah Mobil';
+      $data['contents']   = 'form_input';
+      $data['getDataById'] = $this->_model->getDataById($mobil_id);
+      $data['getAlamat']  = $this->_model->getAlamat();
+
+      $this->load->view('templates/core', $data);
+    } else {
+      $nama         = htmlspecialchars($this->input->post('nama', true));
+      $transmisi    = htmlspecialchars($this->input->post('transmisi', true));
+      $jenis        = htmlspecialchars($this->input->post('jenis', true));
+      $kursi        = htmlspecialchars($this->input->post('kursi', true));
+      $pintu        = htmlspecialchars($this->input->post('pintu', true));
+      $harga        = htmlspecialchars($this->input->post('harga', true));
+      $tahun        = htmlspecialchars($this->input->post('tahun', true));
+      $alamat_id    = htmlspecialchars($this->input->post('alamat_id', true));
+
+      $uploadGambar   = $_FILES['foto']['name'];
+      if ($uploadGambar) {
+        $config['upload_path']      = './assets/img/mobil';
+        $config['allowed_types']    = 'gif|jpg|png|pdf';
+        $config['max_size']         = '2048';
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('foto')) {
+          $this->upload->data('file_name');
+        } else {
+          echo $this->upload->display_errors();
+        }
+      } else {
+        $uploadGambar = 'default-avatar.png';
+      }
+
+      $data = [
+        'nama'          => $nama,
+        'transmisi'     => $transmisi,
+        'jenis'         => $jenis,
+        'kursi'         => $kursi,
+        'pintu'         => $pintu,
+        'harga'         => $harga,
+        'tahun'         => $tahun,
+        'foto'          => $uploadGambar,
+        'alamat_id'     => $alamat_id
+      ];
+      $this->db->where('mobil_id', $mobil_id);
+      $this->db->update('tb_mobil', $data);
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <i class="icon fa fa-check"></i><b>Yeay!.</b>data mobil berhasil disimpan
+    </div>');
+      redirect('mobil');
+    }
   }
 }
