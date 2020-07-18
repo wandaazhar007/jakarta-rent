@@ -25,12 +25,12 @@ class User extends MX_Controller
     $this->load->view('templates/core', $data);
   }
 
-  function profileUser($id)
+  function profileUser($user_id)
   {
     $data['title']      = $this->session->userdata('nama');
     $data['breadcumb']  = $this->session->userdata('nama');
     $data['contents']   = 'profile_user';
-    $data['getProfileUser'] = $this->p->getProfileUser($id);
+    $data['getProfileUser'] = $this->p->getProfileUser($user_id);
     $this->load->view('templates/core', $data);
   }
 
@@ -44,15 +44,9 @@ class User extends MX_Controller
       'valid_email' => '*Email tidak valid',
       'is_unique'   => '*Email sudah terdaftar'
     ]);
-    $this->form_validation->set_rules('no_hp', 'No Handphone', 'required|trim|is_unique[tb_user_admin.no_hp]', [
+    $this->form_validation->set_rules('telepon', 'No Handphone', 'required|trim|is_unique[tb_user_admin.no_hp]', [
       'required'    => '*No handphone wajib diisi',
       'is_unique'   => '*No handphone sudah terdaftar'
-    ]);
-    $this->form_validation->set_rules('bidang', 'Bidang', 'required', [
-      'required'    => '*Bidang user wajib diisi'
-    ]);
-    $this->form_validation->set_rules('user_access', 'Hak akses', 'required', [
-      'required'    => '*Hak akses user wajib diisi'
     ]);
     $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]|matches[password2]', [
       'required'    => '*Password wajib diisi',
@@ -74,15 +68,13 @@ class User extends MX_Controller
       $this->load->view('templates/core', $data);
     } else {
       $nama         = htmlspecialchars($this->input->post('nama', true));
-      $no_hp        = htmlspecialchars($this->input->post('no_hp', true));
+      $telepon      = htmlspecialchars($this->input->post('telepon', true));
       $email        = htmlspecialchars($this->input->post('email', true));
-      $bidang       = htmlspecialchars($this->input->post('bidang', true));
-      $user_access  = htmlspecialchars($this->input->post('user_access', true));
       $password     = password_hash($this->input->post('password', true), PASSWORD_DEFAULT);
 
       $uploadGambar   = $_FILES['foto']['name'];
       if ($uploadGambar) {
-        $config['upload_path']      = './assets/img/';
+        $config['upload_path']      = './assets/img/profile-user/';
         $config['allowed_types']    = 'gif|jpg|png|pdf';
         $config['max_size']         = '2048';
         $this->load->library('upload', $config);
@@ -98,41 +90,16 @@ class User extends MX_Controller
       $data = [
         'nama'        => $nama,
         'email'       => $email,
-        'no_hp'       => $no_hp,
+        'telepon'     => $telepon,
         'password'    => $password,
-        'bidang'      => $bidang,
-        'user_access' => $user_access,
-        'password'    => $password,
-        'date_created' => time(),
-        'active'      => 'tidak aktif',
+        'tgl_input'   => date('Y-m-d H:i:s'),
         'foto'        => $uploadGambar
       ];
 
-      if (!function_exists('random_bytes')) {
-        function random_bytes($length = 6)
-        {
-          $characters = '0123456789';
-          $characters_length = strlen($characters);
-          $output = '';
-          for ($i = 0; $i < $length; $i++)
-            $output .= $characters[rand(0, $characters_length - 1)];
-
-          return $output;
-        }
-      }
-      $token = base64_encode(random_bytes(32));
-      $dataToken = [
-        'nama'              => $nama,
-        'email'             => $email,
-        'token'             => $token,
-        'date_created'      => time()
-      ];
-      $this->wandalibs->_sendEmail($token, 'verify');
-      $this->db->insert('form_token', $dataToken);
-      $this->db->insert('tb_user_admin', $data);
+      $this->db->insert('tb_user', $data);
       $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      <i class="icon fa fa-check"></i><b>Berhasil.</b>Silahkan cek email ' . $email . ' untuk proses verifikasi
+      <i class="icon fa fa-check"></i><b>Yeay!.</b>Berhasil, Data user sudah disimpan
     </div>');
       redirect('user');
     }

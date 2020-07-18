@@ -288,23 +288,23 @@ class Wandalibs
         return $resultRupiah;
     }
 
-    function selisihWaktuBalasByDay($tgl_masuk, $tgl_balas)
+    function diffByDay($end_date, $start_date)
     {
         // $dateDiff = '';
-        $tgl_masuk = strtotime($tgl_masuk);
-        $tgl_balas = strtotime($tgl_balas);
-        $diff = $tgl_balas - $tgl_masuk;
+        $end_date   = strtotime($end_date);
+        $start_date = strtotime($start_date);
+        $diff       = $end_date - $start_date;
+
         return round($diff / (60 * 60 * 24));
     }
 
-    function selisihWaktuBalasByHour($jam_masuk, $jam_balas)
+    function diffByHour($end_date, $start_date)
     {
-        $jam_masuk = strtotime($jam_masuk);
-        $jam_balas = strtotime($jam_balas);
-        // $diff = date_diff($jam_balas, $jam_masuk);
-        // return $diff;
-        $diff      = $jam_balas - $jam_masuk;
+        // $dateDiff = '';
+        $end_date   = strtotime($end_date);
+        $start_date = strtotime($start_date);
+        $diff       = $end_date - $start_date;
+
         return round($diff / (60 * 60));
-        // return round($diff / (60 * 60 * 24));
     }
 }

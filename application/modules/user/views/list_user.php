@@ -10,27 +10,18 @@
             <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
               <div class="card bg-light">
                 <div class="card-header text-muted border-bottom-0">
-                  <?php echo $i['user_access'] ?>
+                  <?php //echo $i['user_access'] 
+                  ?>
                 </div>
                 <div class="dropdown-divider mb-3"></div>
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
                       <h2 class="lead"><b><?php echo $i['nama'] ?></b></h2>
-                      <input type="hidden" value="<?php echo $i['nama'] ?>" name="nama">
-                      <p class="text-muted text-sm"><b>Terakhir login:</b></p>
-                      <?php //foreach ($countLogin as $q) : 
-                      ?>
-                      <p class="text-sm text-muted mb-0">
-                        <?php echo date('d F Y | h:i:s', $lastLogin['date_created']) ?>
-                      </p>
-                      <?php //endforeach; 
-                      ?>
+                      <input type="hidden" value="<?php echo $i['email'] ?>" name="nama">
                       <div class="dropdown-divider mb-3"></div>
                       <ul class="ml-4 mb-0 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fa fa-calendar"></i></span> Mulai Terdaftar: <?php echo date('d F Y', $i['date_created']) ?></li>
-                        <li class="small mt-2"><span class="fa-li"><i class="fas fa-phone"></i></span> <?php echo $i['no_hp'] ?></li>
-                        <li class="small mt-2"><span class="fa-li"><i class="fa fa-tag"></i></span>Bagian: <?php echo $i['bidang'] ?></li>
+                        <li class="small mt-2"><span class="fa-li"><i class="fas fa-phone"></i></span> <?php echo $i['telepon'] ?></li>
                       </ul>
                     </div>
                     <div class="col-5 text-center">
@@ -40,10 +31,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="text-right">
-                    <a href="#" class="btn btn-sm bg-teal">
-                      <i class="fas fa-comments"></i>
-                    </a>
-                    <a href="<?php echo base_url('user/profileUser/') . $i['id'] ?>" class="btn btn-sm btn-tosca">
+                    <a href="<?php echo base_url('user/profileUser/') . $i['user_id'] ?>" class="btn btn-sm btn-tosca">
                       <i class="fas fa-user"></i> Lihat Profile
                     </a>
                   </div>

@@ -26,35 +26,8 @@
             <div class="col-sm-6">
               <div class="form-group input-group-sm">
                 <label class="text-sm mb-0">No Handphone</label>
-                <input type="text" name="no_hp" class="form-control" placeholder="No Handphone" value="<?php echo set_value('no_hp') ?>">
-                <small class="text-danger"><?php echo form_error('no_hp') ?></small>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group input-group-sm">
-                <label class="text-sm mb-0">Bidang</label>
-                <select class="form-control" style="width: 100%;" name="bidang">
-                  <option></option>
-                  <option value="pelayanan medis">Pelayanan Medis</option>
-                  <option value="penunjang">Penunjang</option>
-                  <option value="keperawatan">Keperawatan</option>
-                  <option value="umum">Umum</option>
-                  <option value="keuangan">Keuangan</option>
-                  <option value="costumer services">Costumer Services</option>
-                </select>
-                <small class="text-danger"><?php echo form_error('bidang') ?></small>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group input-group-sm">
-                <label class="text-sm mb-0">User Akses</label>
-                <select class="form-control" style="width: 100%;" name="user_access">
-                  <option></option>
-                  <option value="pengguna">Pengguna</option>
-                  <option value="administrator">Administrator</option>
-                  <option value="costumer services">Costumer Services</option>
-                </select>
-                <small class="text-danger"><?php echo form_error('user_access') ?></small>
+                <input type="text" name="telepon" class="form-control" placeholder="No Handphone" value="<?php echo set_value('telepon') ?>">
+                <small class="text-danger"><?php echo form_error('telepon') ?></small>
               </div>
             </div>
             <div class="col-sm-6">

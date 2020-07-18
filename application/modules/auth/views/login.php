@@ -39,7 +39,7 @@
         <p class="login-box-msg text-uppercase" style="color: #13a9e2; font-weight: bold;"><?php echo $title ?></p>
         <form action="<?php echo base_url('auth/login') ?>" method="post" id="">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" id="first" name="email" value="<?php echo set_value('email') ?>" placeholder="Masukan username" autocomplete="off">
+            <input type="text" class="form-control" id="first" name="email" value="<?php echo set_value('email') ?>" placeholder="Masukan Email Kamu" autocomplete="off">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -48,7 +48,7 @@
           </div>
           <small class="text-danger font-italic"><?php echo form_error('email') ?></small>
           <div class="input-group mb-3">
-            <input type="password" id="second" name="password" class="form-control" placeholder="Masukan password" autocomplete="off">
+            <input type="password" id="second" name="password" class="form-control" placeholder="Masukan Password Kamu" autocomplete="off">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>

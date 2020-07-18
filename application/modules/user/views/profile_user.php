@@ -15,14 +15,13 @@
           <div class="widget-user-image">
             <img class="img-circle elevation-2" src="<?php echo base_url('assets/img/profile-user/') . $i['foto'] ?>" alt="User Avatar">
           </div>
-          <p class="text-center mt-5 text-sm font-italic text-muted">Mulai Terdaftar <?php echo date('d F Y', $i['date_created']) ?></p>
           <div class="dropdown-divider"></div>
           <div class="card-footer" style="margin-top: -30px;">
             <div class="row">
               <div class="col-sm-12 border-right">
                 <div class="description-block">
-                  <h5 class="text-muted"><?php echo $i['user_access'] ?></h5>
-                  <span class="text-muted"><?php echo $i['no_hp'] ?></span>
+                  <h5 class="text-muted"><?php echo $i['email'] ?></h5>
+                  <span class="text-muted"><?php echo $i['telepon'] ?></span>
                 </div>
               </div>
             </div>

@@ -11,6 +11,7 @@
     <div class="card">
       <div class="card-header">
         <span class="text-muted one-da-text-tosca"><?php echo $title ?></span>
+        <a href="<?php echo base_url('trans/tambahTransaksi') ?>"><button class="btn btn-tosca btn-sm float-right"><i class="fa fa-plus"></i>&nbsp; Tambah Transaksi</button></a>
       </div>
       <div class="card-body table-responsive p-3">
         <table id="example1" class="table table-hover">
@@ -18,12 +19,12 @@
             <tr>
               <th>No</th>
               <th>Nama Penyewa</th>
-              <th>Nama Mobil</th>
+              <th>Mobil</th>
               <th>Alamat</th>
-              <th>metode Pembayaran</th>
+              <th>Pembayaran</th>
               <th>Tipe Order</th>
-              <th>Status</th>
-              <th>Aksi</th>
+              <th>Status Pembayaran</th>
+              <th style="width: 200px;">Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -39,9 +40,18 @@
                 <td>
                   <?php
                   if ($i['metode_pembayaran'] == 1) {
-                    echo '<small>Bayar Ditempat</small>';
+                    echo '<small>Cash</small>';
                   } else {
-                    echo '<small>Transfer</small>';
+                    echo '<small>Trans</small>';
+                  }
+                  echo ' | ';
+
+                  if ($i['status'] == 0) {
+                    echo '<small class="text-danger"><i class="fa fa-spinner fa-spin"></i> Belum Lunas</small>';
+                  } elseif ($i['status'] == 1) {
+                    echo '<small class="text-success"><i class="fa fa-check-square"></i> Lunas</small>';
+                  } else {
+                    echo '<small class="text-danger"><i class="fa fa-window-close"> Dibatalkan</i></small>';
                   }
                   ?>
                 </td>
@@ -68,19 +78,25 @@
                 <td>
                   <?php
                   if ($i['status'] == 0) {
+                    //Jika status nya belum lunas
                     echo '
-                    <button class="btn btn-success btn-xs view_data" id="' . $i['order_id'] . '"><i class="fa fa-search"></i> Rincian</button>
+                    <button class="btn btn-primary btn-xs view_data" id="' . $i['order_id'] . '"><i class="fa fa-search"></i> Rincian</button>
+                    <button class="btn btn-success btn-xs confirm_transaksi" id="' . $i['order_id'] . '"><i class="fa fa-edit"></i> Konfirmasi</button>
                     <button class="btn btn-danger btn-xs confirm_delete" id="' . $i['order_id'] . '"><i class="fa fa-window-close"></i> Cancel</button>
                     ';
                   } elseif ($i['status'] == 1) {
+                    //Jika status nya lunas
                     echo '
-                    <button class="btn btn-success btn-xs view_data" id="' . $i['order_id'] . '"><i class="fa fa-search"></i> Rincian</button>
+                    <button class="btn btn-primary btn-xs view_data" id="' . $i['order_id'] . '"><i class="fa fa-search"></i> Rincian</button>
+                    <button class="btn btn-success btn-xs" id="' . $i['order_id'] . '" disabled><i class="fa fa-check"></i> Konfirmasi</button>
                     <button class="btn btn-danger btn-xs confirm_delete" id="' . $i['order_id'] . '"><i class="fa fa-window-close"></i> Cancel</button>
                     ';
                   } else {
+                    //Jika status nya cancel
                     echo '
-                    <button class="btn btn-success btn-xs view_data" id="' . $i['order_id'] . '"><i class="fa fa-search"></i> Rincian</button>
-                    <button class="btn btn-danger btn-xs confirm_delete" id="' . $i['order_id'] . '"><i class="fa fa-window-close"></i> Cancel</button>
+                    <button class="btn btn-primary btn-xs view_data" id="' . $i['order_id'] . '"><i class="fa fa-search"></i> Rincian</button>
+                    <button class="btn btn-success btn-xs" id="' . $i['order_id'] . '" disabled><i class="fa fa-check"></i> Konfirmasi</button>
+                    <button class="btn btn-danger btn-xs" id="' . $i['order_id'] . '" disabled><i class="fa fa-window-close"></i> Cancel</button>
                     ';
                   }
                   ?>
@@ -106,6 +122,24 @@
       <div class="modal-body">
         <div class="card-body">
           <div id="result_history_transaksi"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Konfirmasi transaksi -->
+<div class="modal fade" id="modal_confirm_transaksi">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-tosca">
+        <h4 class="modal-title"> <i class="fa fa-envelope"></i> Konfirmasi Transaksi</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <div id="result_confirm_transaksi"></div>
         </div>
       </div>
     </div>

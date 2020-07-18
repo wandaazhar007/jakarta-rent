@@ -1,4 +1,8 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use FontLib\Table\Type\post;
+
+defined('BASEPATH') or exit('No direct script access allowed');
 class Trans extends MX_Controller
 {
   function __construct()
@@ -7,6 +11,7 @@ class Trans extends MX_Controller
     $this->wandalibs->_checkLoginSession();
     $this->load->model('m_trans', '_model');
     $this->load->library('datatables');
+    $this->load->library('form_validation');
   }
 
   function index()
@@ -24,8 +29,15 @@ class Trans extends MX_Controller
     if (isset($order_id) and !empty($order_id)) {
       $records = $this->_model->getHistoryTrans($order_id);
       $status = $records['0']['status'];
-      // var_dump($status);
-      // die;
+      $status_order = $records['0']['status_order'];
+
+      // $end_date   = strtotime($records['0']['end_date']);
+      // $start_date = strtotime($records['0']['start_date']);
+      $today      = time();
+      $end_date   = $records['0']['end_date'];
+      $start_date = $records['0']['start_date'];
+      $diff       = $this->wandalibs->diffByDay($end_date, $start_date);
+
       if ($status == 0) {
         $status = '
         <span class="btn btn-warning btn-xs"> Belum lunas</span>
@@ -84,7 +96,54 @@ class Trans extends MX_Controller
             <td width="50px">:</td>
             <td width="400px">' . $i['end_date'] . '</td>
           </tr>
+          <tr>
+            <td width="100px">Total Waktu</td>
+            <td width="50px">:</td>
+            <td width="400px">' . $diff . ' Hari</td>
+          </tr>
         </table>
+      </div>
+        ';
+      }
+      echo $output;
+    } else {
+      echo '<p class="text-center text-danger">Data tidak ditemukan</p>';
+    }
+  }
+
+  function showConfirmTrans()
+  {
+    $order_id = $this->input->post('order_id');
+    if (isset($order_id) and !empty($order_id)) {
+      $records = $this->_model->getHistoryTrans($order_id);
+      $status = $records['0']['status'];
+
+      $output = '';
+
+      foreach ($records as $i) {
+        $output .= '
+        <div class="">
+        <table class="table-modal-forward">
+          <tr>
+            <td width="100px">Nama</td>
+            <td width="50px">:</td>
+            <td width="400px">' . $i['nama_user'] . '</td>
+          </tr>
+          <tr>
+            <td width="100px">Email</td>
+            <td width="50px">:</td>
+            <td width="400px">' . $i['email'] . '</td>
+          </tr>
+        </table>
+        <hr>
+       
+        <p class="text-danger text-center">Apakah ingin dikonfirmasi</p>
+        <div class="text-center">
+        
+          <button class="btn btn-success btn-sm mr-2"><i class="fa fa-check mr-2"></i>Iya</button>
+        
+          <button class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fa fa-window-close mr-2"></i>Tidak</button>
+        </div>
       </div>
         ';
       }
@@ -104,7 +163,7 @@ class Trans extends MX_Controller
 
       foreach ($records as $i) {
         $output .= '
-        <p class="text-danger text-center">Apakah Anda yakin akan menghapus data transaksi dari ' . $i['email'] . ' ?</p>
+        <p class="text-muted text-center">Apakah Anda yakin akan menghapus data transaksi dari ' . $i['email'] . ' ?</p>
         <div class="text-center">
         <a href="' . $this->_cancelTrans($order_id) . '">
           <button class="btn btn-success btn-sm mr-2"><i class="fa fa-check mr-2"></i>Iya</button>
@@ -142,6 +201,85 @@ class Trans extends MX_Controller
       echo '<span class="badge badge-success-"><i class="fa fa-check-square"></i> Lunas</span>';
     } else {
       echo '<span class="badge badge-danger"><i class="fa fa-window-close"> Dibatalkan</i></span>';
+    }
+  }
+
+  function _confirmTrans($order_id)
+  {
+    $query = $this->db->query("UPDATE
+                            tb_order
+                            INNER JOIN `tb_mobil` ON `tb_order`.`mobil_id` = `tb_mobil`.`mobil_id`
+                            INNER JOIN `tb_transaksi` ON `tb_order`.`order_id` = `tb_transaksi`.`order_id`
+                            SET
+                            `tb_order`.`status` = 1,
+                            `tb_mobil`.`status` = 1,
+                            `tb_transaksi`.`status` = 1
+                            WHERE `tb_order`.`order_id` = $order_id");
+
+    if ($query->num_rows() > 0) {
+      return $query->num_rows();
+    } else {
+      return 0;
+    }
+  }
+
+  function tambahTransaksi()
+  {
+    $this->form_validation->set_rules('nama_user', 'Nama User', 'required');
+
+    if ($this->form_validation->run() == false) {
+      $data['title']    = 'Form Tambah Transaksi';
+      $data['contents'] = 'form_transaksi';
+      $data['getAllDataMobil'] = $this->_model->getAllDataMobil();
+
+      $this->load->view('templates/core', $data);
+    } else {
+
+
+      $nama_user      = htmlspecialchars($this->input->post('nama_user', true));
+      $nama_mobil     = htmlspecialchars($this->input->post('nama_mobil', true));
+      $mobil_id       = htmlspecialchars($this->input->post('mobil_id', true));
+      $jenis_order    = htmlspecialchars($this->input->post('jenis_order', true));
+      $start_date     = htmlspecialchars($this->input->post('start_date', true));
+      $end_date       = htmlspecialchars($this->input->post('end_date', true));
+
+      $order_id       = htmlspecialchars($this->input->post('order_id', true));
+
+
+
+      $dataOrder = [
+        'mobil_id'      => $mobil_id,
+        'jenis_order'   => $jenis_order,
+        'order_date'    => date('Y-m-d H:i:s'),
+        'start_date'    => $start_date,
+        'end_date'      => $end_date
+      ];
+      // $this->db->insert('tb_order', $dataOrder);
+      $selectMaxIdMobil = $this->_model->selectMaxIdMobil();
+      var_dump($selectMaxIdMobil);
+      die;
+
+      // $dataTransaksi = [
+      //   'oder_id'      => $nama
+      //   'user_id'      => $user_id
+      //   'metode_pembayaran'      => $metode_pembayaran
+      //   'harga'      => $harga
+      //   'create_date'      => $nama
+      // ];
+
+      //select
+      // $dataMobil = [
+      //   'status'      => $nama
+      // ];
+      // $this->db->where('mobil_id', $mobil_id);
+      // $this->db->update('tb_mobil');
+
+      // $this->db->insert('tb_transaksi', $data);
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <i class="icon fa fa-check"></i><small><b>Yeay!.</b>Data transaksi berhasil disimpan</small>
+        </div>');
+      redirect('trans');
     }
   }
 }

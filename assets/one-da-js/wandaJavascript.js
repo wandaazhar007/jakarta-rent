@@ -48,6 +48,24 @@ $(document).ready(function () {
 	});
 });
 
+//~ Modal Konfirmasi Transaksi ~//
+$(document).ready(function () {
+	$('#example1').on('click', '.confirm_transaksi', function () {
+		var order_id = $(this).attr('id');
+		$.ajax({
+			url: base_url + "trans/showConfirmTrans/",
+			method: "POST",
+			data: {
+				order_id: order_id
+			},
+			success: function (data) {
+				$('#result_confirm_transaksi').html(data);
+				$('#modal_confirm_transaksi').modal('show');
+			}
+		});
+	});
+});
+
 //~ Modal Confirm Hapus Transaksi ~//
 $(document).ready(function () {
 	$('#example1').on('click', '.confirm_delete', function () {
@@ -65,6 +83,7 @@ $(document).ready(function () {
 		});
 	});
 });
+
 
 //~ Modal Confirm Hapus Mobil ~//
 $(document).ready(function () {
@@ -144,7 +163,7 @@ $(document).ready(function () {
 		"autoWidth": false,
 		"ajax": {
 			// "url": "<?= base_url() ?>produk/getAllTableProduk/",
-			"url": "http://localhost/admin-pengaduan/pelapor/getAllTablePelapor/",
+			"url": base_url + "/pelapor/getAllTablePelapor/",
 			"type": "POST"
 		},
 		"aLengthMenu": [
