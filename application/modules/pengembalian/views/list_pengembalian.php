@@ -8,44 +8,43 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="card">
-      <div class="card-header">
-        <span class="text-muted one-da-text-tosca"><?php echo $title ?></span>
-      </div>
-      <div class="card-body table-responsive p-3">
-        <table id="example1" class="table table-hover">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama Pengembalian</th>
-              <th>Tipe Mobil</th>
-              <th>Transmisi</th>
-              <th>Tahun</th>
-              <th>Harga</th>
-              <th>Foto</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            $no = 1;
-            foreach ($getAllData as $i) :
-            ?>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <span class="text-muted one-da-text-tosca"><?php echo $title ?></span>
+        </div>
+        <div class="card-body table-responsive p-3">
+          <table id="example1" class="table table-hover">
+            <thead>
               <tr>
-                <td><small><?php echo $no++ ?></small></td>
-                <td><small><?php echo $i[''] ?></small></td>
-                <td><small><?php echo $i[''] ?></small></td>
-                <td><small><?php echo $i[''] ?></small></td>
-                <td><small><?php echo $i[''] ?></small></td>
-                <td><small></small></td>
-                <td><a href="<?= base_url('mobil/getFotoMobil/') . $i[''] . ' " data-toggle="lightbox"><img src="' . base_url() . 'assets/img/mobil/' . $i['foto'] ?>" style="width: 50px; height: 50px;"></a></td>
-                <td>
-                  <button class="btn btn-success btn-xs view_mobil" id="<?= $i[''] ?>"><i class="fa fa-search"></i> Detail</button>
-                  <button class="btn btn-danger btn-xs confirm_delete_mobil" id="<?= $i[''] ?>"><i class="fa fa-window-close"></i> Cancel</button>
-                </td>
+                <th>No</th>
+                <th>Nama Pengembalian</th>
+                <th>Nama Mobil</th>
+                <th>Harga</th>
+                <th>Tipe</th>
+                <th>Foto</th>
+                <th>Aksi</th>
               </tr>
-            <?php endforeach; ?>
-        </table>
+            </thead>
+            <tbody>
+              <?php
+              $no = 1;
+              foreach ($getAllData as $i) :
+              ?>
+                <tr>
+                  <td><small><?php echo $no++ ?></small></td>
+                  <td><small><?php echo $i['nama_user'] ?></small></td>
+                  <td><small><?php echo $i['nama_mobil'] ?></small></td>
+                  <td><small><?php echo $this->wandalibs->_rupiah($i['harga']) ?></small></td>
+                  <td><small><?php echo $i['tipe'] ?></small></td>
+                  <td><a href="<?= base_url('pengembalian/getFotoMobil/') . $i['mobil_id'] . ' " data-toggle="lightbox"><img src="' . base_url() . 'assets/img/mobil/' . $i['foto'] ?>" style="width: 50px; height: 50px;"></a></td>
+                  <td>
+                    <button class="btn btn-success btn-xs view_mobil_pengembalian" id="<?= $i['mobil_id'] ?>"><i class="fa fa-search"></i> Detail</button>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+          </table>
+        </div>
       </div>
     </div>
   </div>

@@ -93,4 +93,23 @@ class M_trans extends CI_Model
   {
     return $this->db->query("SELECT * FROM `tb_mobil`")->result_array();
   }
+
+  function confirmTrans($order_id)
+  {
+    $query =  $this->db->query("UPDATE
+                            `tb_order`
+                            INNER JOIN `tb_mobil` ON `tb_order`.`mobil_id` = `tb_mobil`.`mobil_id`
+                            INNER JOIN `tb_transaksi` ON `tb_order`.`order_id` = `tb_transaksi`.`order_id`
+                            SET
+                            `tb_order`.`status` = 1,
+                            `tb_mobil`.`status` = 1,
+                            `tb_transaksi`.`status` = 1
+                            WHERE `tb_order`.`order_id` = '$order_id'");
+
+    if ($query->num_rows() === 1) {
+      return $query->num_rows();
+    } else {
+      return 0;
+    }
+  }
 }

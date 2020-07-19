@@ -8,44 +8,96 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="card">
-      <div class="card-header">
-        <span class="text-muted one-da-text-tosca"><?php echo $title ?></span>
-      </div>
-      <div class="card-body table-responsive p-3">
-        <table id="example1" class="table table-hover">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama Peminjaman</th>
-              <th>Tipe Mobil</th>
-              <th>Transmisi</th>
-              <th>Tahun</th>
-              <th>Harga</th>
-              <th>Foto</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            $no = 1;
-            foreach ($getAllData as $i) :
-            ?>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <span class="text-muted one-da-text-tosca"><?php echo $title ?></span>
+
+        </div>
+        <div class="card-body table-responsive p-3">
+          <table id="example1" class="table table-hover">
+            <thead>
               <tr>
-                <td><small><?php echo $no++ ?></small></td>
-                <td><small><?php echo $i[''] ?></small></td>
-                <td><small><?php echo $i[''] ?></small></td>
-                <td><small><?php echo $i[''] ?></small></td>
-                <td><small><?php echo $i[''] ?></small></td>
-                <td><small></small></td>
-                <td><a href="<?= base_url('mobil/getFotoMobil/') . $i[''] . ' " data-toggle="lightbox"><img src="' . base_url() . 'assets/img/mobil/' . $i['foto'] ?>" style="width: 50px; height: 50px;"></a></td>
-                <td>
-                  <button class="btn btn-success btn-xs view_mobil" id="<?= $i[''] ?>"><i class="fa fa-search"></i> Detail</button>
-                  <button class="btn btn-danger btn-xs confirm_delete_mobil" id="<?= $i[''] ?>"><i class="fa fa-window-close"></i> Cancel</button>
-                </td>
+                <th>No</th>
+                <th>Nama Penyewa</th>
+                <th>Mobil</th>
+                <th>Alamat</th>
+                <th>Pembayaran</th>
+                <th>Tipe Order</th>
+                <th>Status Pembayaran</th>
+                <th style="width: 140px;">Aksi</th>
               </tr>
-            <?php endforeach; ?>
-        </table>
+            </thead>
+            <tbody>
+              <?php
+              $no = 1;
+              foreach ($getAllData as $i) :
+              ?>
+                <tr>
+                  <td><small><?php echo $no++ ?></small></td>
+                  <td><small><?php echo $i['nama_user'] ?></small></td>
+                  <td><small><?php echo $i['nama_mobil'] ?></small></td>
+                  <td><small><?php echo $i['kota'] . ' ' . $i['alamat'] ?></small></td>
+                  <td><?php echo '<small class="text-danger">' . $i['status'] . '</i></small>'; ?></td>
+                  <td>
+                    <?php
+                    if ($i['jenis_order'] == 1) {
+                      echo '<small>Mobil Saja</small>';
+                    } else {
+                      echo '<small>Mobil dan Supir</small>';
+                    }
+                    ?>
+                  </td>
+                  <td>
+                    <?php
+                    if ($i['status'] == 0) {
+                      echo '<small class="text-danger"><i class="fa fa-spinner fa-spin"></i> Belum Lunas</small>';
+                    } elseif ($i['status'] == 1) {
+                      echo '<small class="text-success"><i class="fa fa-check-square"></i> Lunas</small>';
+                    } else {
+                      echo '<small class="text-danger"><i class="fa fa-window-close"> Dibatalkan</i></small>';
+                    }
+                    ?>
+                  </td>
+                  <td>
+                    <?php
+                    if ($i['status'] == 0) {
+                      //Jika status nya belum lunas
+                      echo '
+                    <a href="' . base_url('peminjaman/rincian/') . $i['order_id'] . '"
+                      <button class="btn btn-primary btn-xs"><i class="fa fa-search"></i> Rincian</button>
+                    </a>
+                    <a href="' . base_url('peminjaman/konfirmasi/') . $i['order_id'] . '"
+                      <button class="btn btn-success btn-xs"><i class="fa fa-edit"></i> Konfirmasi</button>
+                    </a>
+                    ';
+                    } elseif ($i['status'] == 1) {
+                      //Jika status nya lunas
+                      echo '
+                    <a href="' . base_url('peminjaman/rincian/') . $i['order_id'] . '"
+                      <button class="btn btn-primary btn-xs"><i class="fa fa-search"></i> Rincian</button>
+                    </a>
+                    <a href="' . base_url('peminjaman/konfirmasi/') . $i['order_id'] . '"
+                      <button class="btn btn-success btn-xs"><i class="fa fa-edit"></i> Konfirmasi</button>
+                    </a>
+                    ';
+                    } else {
+                      //Jika status nya cancel
+                      echo '
+                    <a href="' . base_url('peminjaman/rincian/') . $i['order_id'] . '"
+                      <button class="btn btn-primary btn-xs"><i class="fa fa-search"></i> Rincian</button>
+                    </a>
+                    <a href="' . base_url('peminjaman/konfirmasi/') . $i['order_id'] . '"
+                      <button class="btn btn-success btn-xs"><i class="fa fa-edit"></i> Konfirmasi</button>
+                    </a>
+                    ';
+                    }
+                    ?>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -53,17 +105,35 @@
 
 
 <!-- Modal History transaksi -->
-<div class="modal fade" id="modal_detail_mobil">
+<div class="modal fade" id="modal_history_transaksi">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-tosca">
-        <h4 class="modal-title"> <i class="fa fa-car"></i> Detail Peminjaman</h4>
+        <h4 class="modal-title"> <i class="fa fa-envelope"></i> History Transaksi</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
         <div class="card-body">
-          <div id="result_detail_mobil"></div>
+          <div id="result_history_transaksi"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Konfirmasi transaksi -->
+<div class="modal fade" id="modal_confirm_transaksi">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-tosca">
+        <h4 class="modal-title"> <i class="fa fa-envelope"></i> Konfirmasi Transaksi</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <div id="result_confirm_transaksi"></div>
         </div>
       </div>
     </div>
@@ -71,17 +141,17 @@
 </div>
 
 <!-- Modal History transaksi -->
-<div class="modal fade" id="modal_confirm_delete_mobil">
+<div class="modal fade" id="modal_confirm_delete">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-danger">
-        <h4 class="modal-title"> <i class="fa fa-car"></i> Hapus Data Peminjaman</h4>
+        <h4 class="modal-title"> <i class="fa fa-envelope"></i> Cancel Transaksi</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
         <div class="card-body">
-          <div id="result_confirm_delete_mobil" class="justify-content-center"></div>
+          <div id="result_confirm_delete" class="justify-content-center"></div>
         </div>
       </div>
     </div>

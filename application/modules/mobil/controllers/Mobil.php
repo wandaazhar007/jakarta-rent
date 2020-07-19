@@ -85,7 +85,7 @@ class Mobil extends MX_Controller
         $output .= '
         <p class="text-danger text-center">Apakah Anda yakin akan menghapus data mobil' . $i['nama'] . ' ?</p>
         <div class="text-center">
-        <a href="' . $this->_deleteById($mobil_id) . '">
+        <a href="' . $this->deleteById($mobil_id) . '">
           <button class="btn btn-success btn-sm mr-2"><i class="fa fa-check mr-2"></i>Iya</button>
         </a>
           <button class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fa fa-window-close mr-2"></i>Tidak</button>
@@ -98,11 +98,15 @@ class Mobil extends MX_Controller
     }
   }
 
-  function _deleteById($mobil_id)
+  function deleteById($mobil_id)
   {
     // $this->db->update('tb_order', ['order_id', $order_id]);
     // $this->db->update('tb_transaksi', ['order_id', $order_id]);
-    $this->session->set_flashdata('flash', 'dicancel');
+    // $this->session->set_flashdata('flash', 'dicancel');
+    $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <i class="icon fa fa-check"></i><small><b>Yeay!.</b>Berhasil hapus</small>
+  </div>');
     // redirect('trans');
   }
 

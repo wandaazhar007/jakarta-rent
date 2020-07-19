@@ -96,6 +96,7 @@ $(document).ready(function () {
 				mobil_id: mobil_id
 			},
 			success: function (data) {
+				mobil_id.attr('disabled', false);
 				$('#result_confirm_delete_mobil').html(data);
 				$('#modal_confirm_delete_mobil').modal('show');
 			}
@@ -109,6 +110,24 @@ $(document).ready(function () {
 		var mobil_id = $(this).attr('id');
 		$.ajax({
 			url: base_url + "mobil/getDataById/",
+			method: "POST",
+			data: {
+				mobil_id: mobil_id
+			},
+			success: function (data) {
+				$('#result_detail_mobil').html(data);
+				$('#modal_detail_mobil').modal('show');
+			}
+		});
+	});
+});
+
+//~ Modal Data Mobil Pengembalian~//
+$(document).ready(function () {
+	$('#example1').on('click', '.view_mobil_pengembalian', function () {
+		var mobil_id = $(this).attr('id');
+		$.ajax({
+			url: base_url + "pengembalian/getDataById/",
 			method: "POST",
 			data: {
 				mobil_id: mobil_id

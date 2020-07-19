@@ -139,9 +139,9 @@ class Trans extends MX_Controller
        
         <p class="text-danger text-center">Apakah ingin dikonfirmasi</p>
         <div class="text-center">
-        
+        <a href="' . base_url('trans/confirmTrans') . '">
           <button class="btn btn-success btn-sm mr-2"><i class="fa fa-check mr-2"></i>Iya</button>
-        
+        </a>
           <button class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fa fa-window-close mr-2"></i>Tidak</button>
         </div>
       </div>
@@ -204,23 +204,15 @@ class Trans extends MX_Controller
     }
   }
 
-  function _confirmTrans($order_id)
+  function confirmTrans()
   {
-    $query = $this->db->query("UPDATE
-                            tb_order
-                            INNER JOIN `tb_mobil` ON `tb_order`.`mobil_id` = `tb_mobil`.`mobil_id`
-                            INNER JOIN `tb_transaksi` ON `tb_order`.`order_id` = `tb_transaksi`.`order_id`
-                            SET
-                            `tb_order`.`status` = 1,
-                            `tb_mobil`.`status` = 1,
-                            `tb_transaksi`.`status` = 1
-                            WHERE `tb_order`.`order_id` = $order_id");
-
-    if ($query->num_rows() > 0) {
-      return $query->num_rows();
-    } else {
-      return 0;
-    }
+    $order_id = htmlspecialchars($this->input->post('order_id', true));
+    // $this->_model->confirmTrans($order_id);
+    $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <i class="icon fa fa-check"></i><small><b>Yeay!.</b>Berhasil dikonfirmasi</small>
+  </div>');
+    redirect('trans');
   }
 
   function tambahTransaksi()

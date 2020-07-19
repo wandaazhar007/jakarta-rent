@@ -20,43 +20,61 @@ class Pengembalian extends MX_Controller
     $this->load->view('templates/core', $data);
   }
 
-  function getDatatById()
+  function rincian($order_id)
   {
-    $pengembalian_id = htmlspecialchars($this->input->post('pengembalian_id', true));
-    if (isset($pengembalian_id) and !empty($$pengembalian_id)) {
-      $query = $this->_model->getDatatById($pengembalian_id);
-      $output = '';
+    $data['title']    = 'Detail Peminjaman';
+    $data['contents'] = 'detail_peminjaman';
+    $data['getDataById']    = $this->_model->getDataById($order_id);
 
+    $this->load->view('templates/core', $data);
+  }
+
+  function getFotoMobil($mobil_id)
+  {
+    $data['getFotoMobil'] = $this->_model->getFotoMobil($mobil_id);
+
+    $this->load->view('detail_foto_mobil', $data);
+  }
+
+  function getDataById()
+  {
+    $mobil_id = htmlspecialchars($this->input->post('mobil_id', true));
+    if (isset($mobil_id) and !empty($mobil_id)) {
+      $query = $this->_model->getDataMobilById($mobil_id);
+      $output = '';
       foreach ($query as $i) {
         $output .= '
         <table class="table-modal-forward">
         <tr>
-          <td width="100px">Nama</td>
+          <td width="100px">Nama Mobil</td>
           <td width="50px">:</td>
-          <td width="400px"></td>
+          <td width="400px">' . $i['nama'] . '</td>
         </tr>
         <tr>
           <td width="100px">Tipe</td>
           <td width="50px">:</td>
-          <td width="400px"></td>
+          <td width="400px">' . $i['tipe'] . '</td>
         </tr>
         <tr>
           <td width="100px">Transmisi</td>
           <td width="50px">:</td>
-          <td width="400px"></td>
+          <td width="400px">' . $i['transmisi'] . '</td>
         </tr>
         <tr>
           <td width="100px">Tahun</td>
           <td width="50px">:</td>
-          <td width="400px"></td>
+          <td width="400px">' . $i['tahun'] . '</td>
         </tr>
         <tr>
           <td width="100px">Harga</td>
           <td width="50px">:</td>
-          <td width="400px"></td>
+          <td width="400px">' . $this->wandalibs->_rupiah($i['harga']) . '</td>
         </tr>
       </table>
-        ';
+        <div class="text-center pt-3">
+      <img src="' . base_url() . 'assets/img/mobil/' . $i['foto'] . '" style="width: 200px;" class="img-thumbnail">
+        </div>  
+      ';
       }
       echo $output;
     } else {

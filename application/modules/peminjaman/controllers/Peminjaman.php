@@ -1,4 +1,8 @@
-<?php defined('BASEPATH') or exit('no direct script access allowed');
+<?php
+
+use FontLib\Table\Type\post;
+
+defined('BASEPATH') or exit('no direct script access allowed');
 
 class Peminjaman extends MX_Controller
 {
@@ -19,47 +23,30 @@ class Peminjaman extends MX_Controller
     $this->load->view('templates/core', $data);
   }
 
-  function getDataById()
+  function rincian($order_id)
   {
-    $pinjam_id = htmlspecialchars($this->input->post('pinjam_id', true));
-    $query = $this->_model->getDataById($pinjam_id);
+    $data['title']    = 'Detail Peminjaman';
+    $data['contents'] = 'detail_peminjaman';
+    $data['getDataById']    = $this->_model->getDataById($order_id);
 
-    if (isset($pinjam_id) and !empty($pinjam_id)) {
-      $output = '';
-      foreach ($query as $i) {
-        $output .= '
-        <table class="table-modal-forward">
-        <tr>
-          <td width="100px">Nama</td>
-          <td width="50px">:</td>
-          <td width="400px"></td>
-        </tr>
-        <tr>
-          <td width="100px">Tipe</td>
-          <td width="50px">:</td>
-          <td width="400px"></td>
-        </tr>
-        <tr>
-          <td width="100px">Transmisi</td>
-          <td width="50px">:</td>
-          <td width="400px"></td>
-        </tr>
-        <tr>
-          <td width="100px">Tahun</td>
-          <td width="50px">:</td>
-          <td width="400px"></td>
-        </tr>
-        <tr>
-          <td width="100px">Harga</td>
-          <td width="50px">:</td>
-          <td width="400px"></td>
-        </tr>
-      </table>
-      ';
-      }
-      echo $output;
-    } else {
-      echo '<p class="text-center text-danger">Data tidak ditemukan</p>';
-    }
+    $this->load->view('templates/core', $data);
+  }
+
+  function konfirmasi($order_id)
+  {
+    $data['title']    = 'Detail Peminjaman';
+    $data['contents'] = 'konfirmasi';
+    $data['getDataById']    = $this->_model->getDataById($order_id);
+
+    $this->load->view('templates/core', $data);
+  }
+
+  function updateKonfirmasi()
+  {
+    $order_id   = htmlspecialchars($this->input->post('order_id', true));
+    $konfirmasi = htmlspecialchars($this->input->post('konfirmasi', true));
+    $this->db->set('relasi_tabel', $konfirmasi);
+    $this->db->where('order_id', $order_id);
+    $this->db->update('order_id');
   }
 }
