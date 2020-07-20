@@ -10,7 +10,7 @@
           </div>
           <div class="col-12">
             <div class="card-body">
-              <form role="form" action="<?php echo base_url('user/insertUser') ?>" method="post" enctype="multipart/form-data">
+              <form role="form" action="<?php echo base_url('user_admin/insertUserAdmin') ?>" method="post" enctype="multipart/form-data">
                 <div class="col-12">
                   <div class="form-group input-group-sm">
                     <label class="text-sm mb-0">Nama Lengkap</label>
@@ -28,8 +28,19 @@
                 <div class="col-12">
                   <div class="form-group input-group-sm">
                     <label class="text-sm mb-0">No Handphone</label>
-                    <input type="text" name="telepon" class="form-control" placeholder="No Handphone" value="<?php echo set_value('telepon') ?>">
-                    <small class="text-danger"><?php echo form_error('telepon') ?></small>
+                    <input type="text" name="no_hp" class="form-control" placeholder="No Handphone" value="<?php echo set_value('no_hp') ?>">
+                    <small class="text-danger"><?php echo form_error('no_hp') ?></small>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group input-group-sm">
+                    <label class="text-sm mb-0">Hak Akses</label>
+                    <select class="form-control" style="width: 100%;" name="user_access">
+                      <option></option>
+                      <option value="pengguna">Pengguna</option>
+                      <option value="administrator">Administrator</option>
+                    </select>
+                    <small class="text-danger"><?php echo form_error('user_access') ?></small>
                   </div>
                 </div>
                 <div class="col-12">
@@ -66,11 +77,11 @@
       <div class="col-8">
         <div class="card" style="padding: 20px;">
           <div class="card-header">
-            <a href="<?php echo base_url('user') ?>"><button class="btn btn-primary btn-sm float-left" style="margin-left: -20px;"><i class="fa fa-arrow-left"></i>&nbsp; Kembali ke list user</button></a>
+            <a href="<?php echo base_url('user_admin') ?>"><button class="btn btn-primary btn-sm float-left" style="margin-left: -20px;"><i class="fa fa-arrow-left"></i>&nbsp; Kembali ke list user admin</button></a>
             <span class="text-muted one-da-text-tosca float-right">Daflar nama user yang sudah terdaftar</span>
           </div>
           <div class="card-body table-responsive p-0" style="padding: 20px;">
-            <table class="table table-hover text-nowrap" id="tabel_list_user">
+            <table class="table table-hover text-nowrap" id="tabel_list_user_admin">
               <thead>
                 <tr>
                   <th>No</th>
@@ -90,17 +101,17 @@
 
 
   <!-- Modal edit user -->
-  <div class="modal fade" id="modal_edit_user">
+  <div class="modal fade" id="modal_edit_user_admin">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-tosca">
-          <h5 class="modal-title"> <i class="fa fa-fw fa-user"></i>&nbsp;Detail User</h5>
+          <h5 class="modal-title"> <i class="fa fa-fw fa-user"></i>&nbsp;Detail User Admin</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
           <div class="card-body">
-            <div id="result_edit_user"></div>
+            <div id="result_edit_user_admin"></div>
           </div>
         </div>
       </div>

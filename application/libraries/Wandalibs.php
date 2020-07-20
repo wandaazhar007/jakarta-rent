@@ -176,50 +176,6 @@ class Wandalibs
         redirect('auth/login');
     }
 
-    function _sendEmail($token, $type)
-    {
-        $CI = &get_instance();
-        //load library send email CodeIgniter
-        $CI->load->library('email');
-        $config = [
-            'protocol'      => 'smtp',
-            'smtp_host'     => 'ssl://smtp.googlemail.com',
-            'smtp_user'     => 'promkesrsutangsel@gmail.com',
-            'smtp_pass'     => 'PkRs2017',
-            'smtp_port'     =>  465,
-            'mailtype'      => 'html',
-            'charset'       => 'utf-8'
-        ];
-
-        //verify/inisialisasi smtp port di server localhost
-        $CI->email->initialize($config);
-        $CI->email->set_newline("\r\n");
-
-        $CI->email->from('promkesrsutangsel@gmail.com', 'Promkes RSU Tangsel');
-        $CI->email->to($CI->input->post('email'));
-        $pesan_keluar   = $CI->input->post('pesan_keluar');
-        //cek kondisi tipe
-        if ($type == 'verify') {
-            $CI->email->subject('Verifikasi Akun RSU Kota Tangsel');
-            $CI->email->message('<h3 style="color: blue;">Terimakasih Anda telah mendaftar <br> Klik Link ini untuk verifikasi akun Anda : <h3> <br> <h3>Password Anda adalah: </h3> <a href="' . base_url() . 'auth/pageVerifikasiAkun?email=' . $CI->input->post('email') . '&token=' . urlencode($token) . '"><button style="color: #fff; background-color: blue;" >Aktikan</button></a>');
-        } else if ($type == 'forgot') {
-            $CI->email->subject('Reset Password');
-            $CI->email->message('<h3 style="color: blue;">Hallo<br> Klik Link ini untuk mereset password kamu: <h3> <a href="' . base_url() . 'register/resetPassword?email=' . $CI->input->post('email') . '&token=' . urlencode($token) . '"><button style="color: #fff; background-color: blue;" >Reset Password</button></a>');
-        } else if ($type == 'compose') {
-            $CI->email->subject('Layanan Pengaduan RSU Kota Tangerang Selatan');
-            $CI->email->message($pesan_keluar);
-        } else if ($type == 'balas_inbox') {
-            $CI->email->subject('Layanan Pengaduan RSU Kota Tangerang Selatan');
-            $CI->email->message($pesan_keluar);
-        }
-
-        if ($CI->email->send()) {
-            return true;
-        } else {
-            echo $CI->email->print_debugger();
-            die;
-        }
-    }
 
     function _getToken($length = 6)
     {

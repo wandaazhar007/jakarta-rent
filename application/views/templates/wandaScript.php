@@ -108,6 +108,19 @@
       timer: 3000
     });
 
+    $('.swalForgotPassword').click(function() {
+      Toast.fire({
+        type: 'warning',
+        title: 'Maaf!. Silahkan hubungi administrator untuk mereset password Anda.'
+      })
+    });
+    $('.swalDefaultWarning').click(function() {
+      Toast.fire({
+        type: 'info',
+        title: 'Maaf!. Silahkan hubungi administrator untuk registrasi akun baru.'
+      })
+    });
+
     $('.swalDefaultSuccess').click(function() {
       Toast.fire({
         type: 'success',
@@ -128,12 +141,7 @@
         timer: 8000
       })
     });
-    $('.swalDefaultWarning').click(function() {
-      Toast.fire({
-        type: 'warning',
-        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-      })
-    });
+
     $('.swalDefaultQuestion').click(function() {
       Toast.fire({
         type: 'question',

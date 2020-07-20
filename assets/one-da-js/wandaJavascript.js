@@ -1,3 +1,96 @@
+$(function () {
+	$('#example1').DataTable()
+	$('#example2').DataTable({
+		'paging': true,
+		'lengthChange': false,
+		'searching': false,
+		'ordering': true,
+		'info': true,
+		'autoWidth': false
+	})
+});
+
+//~ Datatable serverside user ~//
+var save_method; //for save method string
+var oTable;
+$(document).ready(function () {
+	oTable = $('#tabel_list_user').DataTable({
+		"processing": true,
+		"serverSide": true,
+		//"lengthChange": false,
+		//"displayLength" : 20,
+		"order": [],
+		"autoWidth": false,
+		"ajax": {
+			"url": base_url + "/user/getAllTableUser/",
+			"type": "POST"
+		},
+		"aLengthMenu": [
+			[10, 50, 100],
+			[10, 50, 100]
+		], // Combobox Limit
+		"columnDefs": [{
+				"targets": [0],
+				"searchable": true,
+				"sortable": true
+			},
+			{
+				"targets": [1],
+				"searchable": true,
+				"sortable": true
+			},
+			{
+				"targets": [2],
+				"searchable": true,
+				"sortable": true
+			}
+		],
+
+	});
+});
+
+
+//~ Datatable serverside user admin ~//
+var save_method; //for save method string
+var oTable;
+$(document).ready(function () {
+	oTable = $('#tabel_list_user_admin').DataTable({
+		"processing": true,
+		"serverSide": true,
+		//"lengthChange": false,
+		//"displayLength" : 20,
+		"order": [],
+		"autoWidth": false,
+		"ajax": {
+			"url": base_url + "/user_admin/getAllTableUserAdmin/",
+			"type": "POST"
+		},
+		"aLengthMenu": [
+			[10, 50, 100],
+			[10, 50, 100]
+		], // Combobox Limit
+		"columnDefs": [{
+				"targets": [0],
+				"searchable": true,
+				"sortable": true
+			},
+			{
+				"targets": [1],
+				"searchable": true,
+				"sortable": true
+			},
+			{
+				"targets": [2],
+				"searchable": true,
+				"sortable": true
+			}
+		],
+
+	});
+});
+
+
+
 const flashData = $('.flash-data').data('flashdata');
 
 if (flashData) {
@@ -140,6 +233,44 @@ $(document).ready(function () {
 	});
 });
 
+//~ Modal Edit User~//
+$(document).ready(function () {
+	// $('#form-edit-user')[0].reset();
+	$('#tabel_list_user').on('click', '.view_edit_user', function () {
+		var user_id = $(this).attr('id');
+		$.ajax({
+			url: base_url + "user/detailById",
+			method: "POST",
+			data: {
+				user_id: user_id
+			},
+			success: function (data) {
+				$('#result_edit_user').html(data);
+				$('#modal_edit_user').modal('show');
+			}
+		});
+	});
+});
+
+//~ Modal Edit User Admin~//
+$(document).ready(function () {
+	// $('#form-edit-user')[0].reset();
+	$('#tabel_list_user_admin').on('click', '.view_edit_user_admin', function () {
+		var id = $(this).attr('id');
+		$.ajax({
+			url: base_url + "user_admin/detailById",
+			method: "POST",
+			data: {
+				id: id
+			},
+			success: function (data) {
+				$('#result_edit_user_admin').html(data);
+				$('#modal_edit_user_admin').modal('show');
+			}
+		});
+	});
+});
+
 
 //~ Format Rupiah pada tag input harga produk di form input data produk ~//
 var rupiah = document.getElementById('price');
@@ -166,87 +297,3 @@ function formatRupiah(angka, prefix) {
 	rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 	return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 }
-
-
-//~ Datatable serverside pelapor ~//
-var save_method; //for save method string
-var oTable;
-$(document).ready(function () {
-	oTable = $('#tabel_list_pelapor').DataTable({
-
-		"processing": true,
-		"serverSide": true,
-		//"lengthChange": false,
-		//"displayLength" : 20,
-		"order": [],
-		"autoWidth": false,
-		"ajax": {
-			// "url": "<?= base_url() ?>produk/getAllTableProduk/",
-			"url": base_url + "/pelapor/getAllTablePelapor/",
-			"type": "POST"
-		},
-		"aLengthMenu": [
-			[10, 50, 100],
-			[10, 50, 100]
-		], // Combobox Limit
-		"columnDefs": [{
-				"targets": [0],
-				"searchable": true,
-				"sortable": true
-			},
-			{
-				"targets": [1],
-				"searchable": true,
-				"sortable": true
-			},
-			{
-				"targets": [2],
-				"searchable": true,
-				"sortable": true
-			}
-		],
-
-	});
-});
-
-
-//~ Datatable serverside profile dokter ~//
-var save_method; //for save method string
-var oTable;
-$(document).ready(function () {
-	oTable = $('#table_dokter').DataTable({
-
-		"processing": true,
-		"serverSide": true,
-		//"lengthChange": false,
-		//"displayLength" : 20,
-		"order": [],
-		"autoWidth": false,
-		"ajax": {
-			// "url": "<?= base_url() ?>produk/getAllTableProduk/",
-			"url": "http://localhost/admin-pengaduan/profile_dokter/getAllDataDokter/",
-			"type": "POST"
-		},
-		"aLengthMenu": [
-			[10, 50, 100],
-			[10, 50, 100]
-		], // Combobox Limit
-		"columnDefs": [{
-				"targets": [0],
-				"searchable": true,
-				"sortable": true
-			},
-			{
-				"targets": [1],
-				"searchable": true,
-				"sortable": true
-			},
-			{
-				"targets": [2],
-				"searchable": true,
-				"sortable": true
-			}
-		],
-
-	});
-});

@@ -53,8 +53,14 @@
         </li>
         <li class="nav-item">
           <a href="<?php echo base_url('user') ?>" class="nav-link">
-            <i class="nav-icon fa fa-user"></i>
+            <i class="nav-icon fa fa-users"></i>
             <p>User</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?php echo base_url('user_admin') ?>" class="nav-link">
+            <i class="nav-icon fa fa-user"></i>
+            <p>User Admin</p>
           </a>
         </li>
         <li class="nav-item">

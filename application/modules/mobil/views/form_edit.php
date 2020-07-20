@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-  <div class="col-12 col-sm-6 col-md-6 text-center">
+  <div class="col-4 col-sm-4 col-md-4 text-center">
     <?php echo $this->session->flashdata('message'); ?>
   </div>
 </div>
@@ -17,6 +17,7 @@
               <div class="col-sm-12">
                 <div class="form-group input-group-sm">
                   <label class="text-sm mb-0">Nama</label>
+                  <input type="hidden" name="nama" class="form-control" value="<?php echo $i['mobil_id'] ?>">
                   <input type="text" name="nama" class="form-control" placeholder="Masukan Nama Mobil" value="<?php echo $i['nama'] ?>">
                   <small class="text-danger"><?php echo form_error('nama') ?></small>
                 </div>

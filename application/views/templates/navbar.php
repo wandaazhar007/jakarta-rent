@@ -53,7 +53,7 @@
         <span class="badge badge-danger navbar-badge"><?php echo $this->wandalibs->countLoginUserById($this->session->userdata('email')); ?></span>
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <span class="dropdown-item dropdown-header"><?php echo $this->wandalibs->countLoginUserById($this->session->userdata('email')); ?> Notifications</span>
+        <span class="dropdown-item dropdown-header">Anda telah login sebanyak <?php echo $this->wandalibs->countLoginUserById($this->session->userdata('email')); ?> Kali</span>
         <div class="dropdown-divider"></div>
         <a href="#" class="dropdown-item">
           <i class="fas fa-clock mr-2"></i> Terakhir Anda login <?php echo date('d F Y | h:i:s', $this->wandalibs->_lastLoginUserById($this->session->userdata('email'))['date_created']) ?>

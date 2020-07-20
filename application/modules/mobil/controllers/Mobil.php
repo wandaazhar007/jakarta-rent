@@ -61,8 +61,8 @@ class Mobil extends MX_Controller
       </table>
         <div class="text-center pt-3">
       <img src="' . base_url() . 'assets/img/mobil/' . $i['foto'] . '" style="width: 200px;" class="img-thumbnail">
-      <a href="' . base_url('mobil/updateMobil/') . $i['mobil_id'] . '">
-        <button class="btn btn-tosca btn-sm"><i class="fa fa-edit"></i>Edit</button>
+      <a href="' . base_url('mobil/editMobil/') . $i['mobil_id'] . '">
+        <button class="btn btn-tosca btn-sm btn-block mt-2"><i class="fa fa-edit"></i>&nbsp; Edit Mobil ' . $i['nama'] . '</button>
       </a>
         </div>  
       ';
@@ -194,8 +194,17 @@ class Mobil extends MX_Controller
     }
   }
 
+  function editMobil($mobil_id)
+  {
+    $data['title']      = 'Jakarta Rent | Form Tambah Mobil';
+    $data['contents']   = 'form_edit';
+    $data['getDataById'] = $this->_model->getDataById($mobil_id);
+    $data['getAlamat']  = $this->_model->getAlamat();
 
-  function updateMobil($mobil_id)
+    $this->load->view('templates/core', $data);
+  }
+
+  function updateMobil()
   {
     $this->form_validation->set_rules('nama', 'Nama Mobil', 'required', [
       'required'      => '*Nama mobil harus diisi!'
@@ -220,13 +229,23 @@ class Mobil extends MX_Controller
     ]);
 
     if ($this->form_validation->run() == false) {
-      $data['title']      = 'Jakarta Rent | Form Tambah Mobil';
-      $data['contents']   = 'form_input';
-      $data['getDataById'] = $this->_model->getDataById($mobil_id);
-      $data['getAlamat']  = $this->_model->getAlamat();
+      // $data['title']      = 'Jakarta Rent | Form Tambah Mobil';
+      // $data['contents']   = 'form_edit';
+      // $data['getDataById'] = $this->_model->getDataById($mobil_id);
+      // $data['getAlamat']  = $this->_model->getAlamat();
+      $mobil_id     = htmlspecialchars($this->input->post('mobil_id', true));
 
-      $this->load->view('templates/core', $data);
+      // $this->load->view('form_edit' . $mobil_id . '');
+      $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <i class="icon fa fa-check"></i><b>Ups!.</b>Lengkapi data mobil
+    </div>');
+
+
+
+      redirect('' . $_SERVER['HTTP_REFERER'] . '');
     } else {
+      $mobil_id     = htmlspecialchars($this->input->post('mobil_id', true));
       $nama         = htmlspecialchars($this->input->post('nama', true));
       $transmisi    = htmlspecialchars($this->input->post('transmisi', true));
       $jenis        = htmlspecialchars($this->input->post('jenis', true));
@@ -235,6 +254,8 @@ class Mobil extends MX_Controller
       $harga        = htmlspecialchars($this->input->post('harga', true));
       $tahun        = htmlspecialchars($this->input->post('tahun', true));
       $alamat_id    = htmlspecialchars($this->input->post('alamat_id', true));
+
+      $query =  $this->db->get_where('tb_mobil', ['mobil_id' => $mobil_id])->row_array();
 
       $uploadGambar   = $_FILES['foto']['name'];
       if ($uploadGambar) {
@@ -248,7 +269,7 @@ class Mobil extends MX_Controller
           echo $this->upload->display_errors();
         }
       } else {
-        $uploadGambar = 'default-avatar.png';
+        $uploadGambar = $query['foto'];
       }
 
       $data = [
@@ -270,6 +291,7 @@ class Mobil extends MX_Controller
       <i class="icon fa fa-check"></i><b>Yeay!.</b>data mobil berhasil disimpan
     </div>');
       redirect('mobil');
+      // redirect('' . $_SERVER['HTTP_REFERER'] . '');
     }
   }
 }
