@@ -40,6 +40,7 @@
                   <td><a href="<?= base_url('pengembalian/getFotoMobil/') . $i['mobil_id'] . ' " data-toggle="lightbox"><img src="' . base_url() . 'assets/img/mobil/' . $i['foto'] ?>" style="width: 50px; height: 50px;"></a></td>
                   <td>
                     <button class="btn btn-success btn-xs view_mobil_pengembalian" id="<?= $i['mobil_id'] ?>"><i class="fa fa-search"></i> Detail</button>
+                    <button class="btn btn-success btn-xs modal_pengembalian" id="<?= $i['pengembalian_id'] ?>"><i class="fa fa-search"></i> Detail Pengembalian</button>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -63,6 +64,25 @@
       <div class="modal-body">
         <div class="card-body">
           <div id="result_detail_mobil"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Pengembalian  -->
+<div class="modal fade" id="modal_detail_pengembalian">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-tosca">
+        <h4 class="modal-title"> <i class="fa fa-car"></i> Detail Pengembalian</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <div id="result_detail_pengembalian"></div>
         </div>
       </div>
     </div>
